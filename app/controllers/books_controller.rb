@@ -5,6 +5,7 @@ class BooksController < ApplicationController
   end
 
   def create
+    books = params[:message]
   end
 
   def update
