@@ -5,7 +5,10 @@ class BooksController < ApplicationController
   end
 
   def create
-    books = params[:message]
+    params[:message].split("\n").each do |line|
+      title, author = line.split(",")
+      Book.create(title: title, author: author)
+    end
   end
 
   def update
