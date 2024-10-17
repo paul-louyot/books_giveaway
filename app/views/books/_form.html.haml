@@ -5,7 +5,8 @@
         = form.hidden_field :user_name, value: nil
         = form.submit "unreserve"
     - else
-      book already reserved
+      %button{disabled: true}
+        Reserve
 
   - else
     = form_with model: book do |form|
