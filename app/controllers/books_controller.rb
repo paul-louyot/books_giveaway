@@ -3,6 +3,8 @@ class BooksController < ApplicationController
   before_action :set_user
 
   def index
+    redirect_to welcome_path and return unless @is_authenticated
+
     @books = Book.all
   end
 
@@ -30,5 +32,6 @@ class BooksController < ApplicationController
 
   def set_user
     @user_name = cookies[:user_name]
+    @is_authenticated = @user_name.present?
   end
 end
