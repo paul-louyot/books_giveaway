@@ -9,17 +9,6 @@
       %td
         = book.author
       %td
-        - if book.is_reserved?
-          - if book.user_name == @user_name
-            = form_with model: book do |form|
-              = form.hidden_field :user_name, value: nil
-              = form.submit "unreserve"
-          - else
-            book already reserved
-
-        - else
-          = form_with model: book do |form|
-            = form.hidden_field :user_name, value: @user_name
-            = form.submit "reserve book"
+        = render partial: "form", locals: { book: book, user_name: @user_name }
 
 
