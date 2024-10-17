@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "/welcome", to: "welcome#index"
+  post :sign_in, to: "welcome#sign_in"
   resources :books, only: [ :index, :create, :update, :new ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

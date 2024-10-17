@@ -1,0 +1,7 @@
+%h1 Welcome#index
+%p Find me in app/views/welcome/index.html.haml
+
+
+= form_with url: sign_in_path, local: true, method: :post do |form|
+  = form.text_field :user_name, autocomplete: 'off', required: true, pattern: ".*[a-zA-Z].*"
+  = form.submit
