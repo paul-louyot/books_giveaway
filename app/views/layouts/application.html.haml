@@ -6,6 +6,8 @@
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
     %meta{:content => "yes", :name => "mobile-web-app-capable"}/
+    %link{:href => "https://unpkg.com/mvp.css", :rel => "stylesheet"}/
+
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
@@ -19,4 +21,5 @@
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_importmap_tags
   %body
-    = yield
+    %main
+      = yield
