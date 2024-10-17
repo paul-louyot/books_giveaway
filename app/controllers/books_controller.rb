@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  http_basic_authenticate_with name: "paul", password: "secret", except: [ :index, :update ]
+
   def index
   end
 
