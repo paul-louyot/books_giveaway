@@ -17,8 +17,12 @@ class BooksController < ApplicationController
   end
 
   def claim
+    raise StandardError.new "book already claimed" if @book.is_claimed?
+
     @book.update!(user_name: @user_name)
     render partial: "form", locals: { book: @book, user_name: @user_name }
+  rescue
+    render partial: "error", locals: { book: @book }
   end
 
   def unclaim
