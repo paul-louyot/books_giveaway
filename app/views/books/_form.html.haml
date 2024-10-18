@@ -1,14 +1,9 @@
 %turbo-frame{id: dom_id(book)}
-  - if book.is_reserved?
+  - if book.is_claimed?
     - if book.user_name == user_name
-      = form_with model: book do |form|
-        = form.hidden_field :user_name, value: nil
-        = form.submit "unreserve"
+      = link_to "Unclaim book", unclaim_book_path(book.id), data: { turbo_method: "post" }
     - else
-      %button{disabled: true}
-        Reserve
+      book already claimed
 
   - else
-    = form_with model: book do |form|
-      = form.hidden_field :user_name, value: user_name
-      = form.submit "reserve book"
+    = link_to "Claim book", claim_book_path(book.id), data: { turbo_method: "post" }

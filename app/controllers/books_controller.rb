@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
-  http_basic_authenticate_with name: "paul", password: "secret", except: [ :index, :update ]
+  http_basic_authenticate_with name: "paul", password: "secret", only: [ :create, :new ]
   before_action :set_user
+  before_action :set_book!, only: [ :claim, :unclaim ]
 
   def index
     redirect_to welcome_path and return unless @is_authenticated
@@ -15,10 +16,14 @@ class BooksController < ApplicationController
     end
   end
 
-  def update
-    book = Book.find_by(id: params[:id])
-    book.update!(book_params)
-    render partial: "form", locals: { book: book, user_name: @user_name }
+  def claim
+    @book.update!(user_name: @user_name)
+    render partial: "form", locals: { book: @book, user_name: @user_name }
+  end
+
+  def unclaim
+    @book.update!(user_name: nil)
+    render partial: "form", locals: { book: @book, user_name: @user_name }
   end
 
   def new
@@ -26,8 +31,8 @@ class BooksController < ApplicationController
 
   private
 
-  def book_params
-    params.require(:book).permit(:user_name)
+  def set_book!
+    @book = Book.find_by!(id: params[:id])
   end
 
   def set_user

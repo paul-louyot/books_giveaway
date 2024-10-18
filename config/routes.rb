@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   get "/welcome", to: "welcome#index"
   post :sign_in, to: "welcome#sign_in"
-  resources :books, only: [ :index, :create, :update, :new ]
+  resources :books, only: [ :index, :create, :update, :new ] do
+    member do
+      post :claim
+      post :unclaim
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
