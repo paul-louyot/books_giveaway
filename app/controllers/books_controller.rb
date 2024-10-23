@@ -2,6 +2,24 @@ class BooksController < ApplicationController
   http_basic_authenticate_with name: "paul", password: "secret", only: [ :create, :new ]
   before_action :set_user
   before_action :set_book!, only: [ :claim, :unclaim ]
+  after_action only: :claim do
+    Turbo::StreamsChannel.broadcast_replace_later_to("books",
+      target: "claim_#{helpers.dom_id(@book)}",
+      partial: "books/just_claimed",
+      locals: { book: @book }
+    )
+  end
+  after_action only: :unclaim do
+    Turbo::StreamsChannel.broadcast_replace_later_to("books",
+      target: "just_claimed_#{helpers.dom_id(@book)}",
+      partial: "books/claim",
+      locals: { book: @book }
+    )
+  end
+
+
+  class AuthenticationError < StandardError
+  end
 
   def index
     redirect_to welcome_path and return unless @is_authenticated
@@ -17,17 +35,17 @@ class BooksController < ApplicationController
   end
 
   def claim
-    raise StandardError.new "book already claimed" if @book.is_claimed?
+    raise AuthenticationError if @book.is_claimed?
 
     @book.update!(user_name: @user_name)
-    render partial: "form", locals: { book: @book, user_name: @user_name }
+    render partial: "form", locals: { book: @book, can_unclaim: @book.can_be_unclaimed_by(@user_name) }
   rescue
     render partial: "error", locals: { book: @book }
   end
 
   def unclaim
     @book.update!(user_name: nil)
-    render partial: "form", locals: { book: @book, user_name: @user_name }
+    render partial: "form", locals: { book: @book, can_unclaim: @book.can_be_unclaimed_by(@user_name) }
   end
 
   def new

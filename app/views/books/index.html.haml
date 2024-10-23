@@ -1,5 +1,5 @@
 %h1 Books
-
+= turbo_stream_from "books"
 %table
   - @books.each do |book|
     %tr
@@ -8,6 +8,8 @@
       %td
         = book.author
       %td
-        = render partial: "form", locals: { book: book, user_name: @user_name }
+        = render partial: "form", locals: { book: book, can_unclaim: book.can_be_unclaimed_by(@user_name) }
+
+
 
 

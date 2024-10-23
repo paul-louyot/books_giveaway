@@ -1,9 +1,9 @@
 %turbo-frame{id: dom_id(book)}
   - if book.is_claimed?
-    - if book.user_name == user_name
+    - if can_unclaim
       = link_to "Unclaim book", unclaim_book_path(book.id), data: { turbo_method: "post" }
     - else
       book already claimed
 
   - else
-    = link_to "Claim book", claim_book_path(book.id), data: { turbo_method: "post" }
+    = link_to "Claim book", claim_book_path(book.id), data: { turbo_method: "post" }, id: "claim_#{dom_id(book)}"
