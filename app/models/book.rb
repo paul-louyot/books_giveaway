@@ -5,7 +5,7 @@ class Book < ApplicationRecord
     user_name.present?
   end
 
-  def can_be_unclaimed_by(name)
+  def is_claimed_by?(name)
     name == user_name
   end
 end

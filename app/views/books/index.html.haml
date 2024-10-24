@@ -8,7 +8,7 @@
       %td
         = book.author
       %td
-        = render partial: "form", locals: { book: book, can_unclaim: book.can_be_unclaimed_by(@user_name) }
+        = render partial: "form", locals: { book: book, can_unclaim: book.is_claimed_by?(@user_name) }
 
 
 
