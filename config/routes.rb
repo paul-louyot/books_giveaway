@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root "books#index"
+  root "welcome#index"
 
-  get "/welcome", to: "welcome#index"
+  get :new_session, to: "welcome#new"
   post :sign_in, to: "welcome#sign_in"
   resources :books, only: [ :index, :create, :update, :new ] do
     member do

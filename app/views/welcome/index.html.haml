@@ -1,7 +1,12 @@
-%h1 Welcome#index
-%p Find me in app/views/welcome/index.html.haml
+%h1 Salut !
 
+%details
+  %summary J'ai pas mal de bouquins chez moi
+  = image_tag "books.jpg", style: "max-width: 100%"
 
-= form_with url: sign_in_path, local: true, method: :post do |form|
-  = form.text_field :user_name, autocomplete: 'off', required: true, pattern: ".*[a-zA-Z].*"
-  = form.submit
+%p Je vais m'en séparer !
+
+%p S'ils y en a qui te plaisent, dis-le moi et je te les met de côté.
+
+= link_to books_path, class: 'btn' do
+  %b Réserver un livre

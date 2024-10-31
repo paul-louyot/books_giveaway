@@ -25,7 +25,7 @@ class BooksController < ApplicationController
   end
 
   def index
-    redirect_to welcome_path and return unless @is_authenticated
+    redirect_to new_session_path and return unless @is_authenticated
 
     @books = Book.all
   end

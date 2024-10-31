@@ -1,0 +1,5 @@
+%h2 Qui es-tu ?
+
+= form_with url: sign_in_path, local: true, method: :post do |form|
+  = form.text_field :user_name, autocomplete: 'off', required: true, pattern: ".*[a-zA-Z].*", autofocus: true
+  = form.submit
