@@ -1,15 +1,16 @@
-%h1 Books
 = turbo_stream_from "books"
-%table
+
+%h1 Réservez-moi !
+
+.flex.flex-col.gap-2
   - @books.each do |book|
-    %tr
-      %td
-        = book.title
-      %td
-        = book.author
-      %td
+    .flex.flex-row.justify-between.gap-4
+      %div.leading-tight
+        %span.font-semibold<
+          = book.title
+          %span.font-normal ,
+        %span
+          = book.author
+      %div
         = render partial: "form", locals: { book: book, can_unclaim: book.is_claimed_by?(@user_name) }
-
-
-
 
